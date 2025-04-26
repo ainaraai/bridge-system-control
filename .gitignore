@@ -3,6 +3,14 @@
 */DebugConfig/
 */Listings/
 
+# Project auto-generated .name files
+*.a.arrojo
+*.alber
+
+# Google Drive config files
+*.tmp.driveupload
+
+
 # Prerequisites
 *.d
 
