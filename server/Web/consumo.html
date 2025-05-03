@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 40px;
+    }
+    .box-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 50px;
+      gap: 40px;
+    }
+    .box {
+      background-color: #ffffff;
+      border: 2px solid #007BFF;
+      padding: 30px;
+      width: 200px;
+      text-align: center;
+      font-size: 1.2em;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-decoration: none;
+      color: #007BFF;
+    }
+    .box:hover {
+      background-color: #007BFF;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel de Control</h1>
+
+  <div class="box-container">
+    <a class="box" href="/pagina1.html">Página 1</a>
+    <a class="box" href="/pagina2.html">Página 2</a>
+    <a class="box" href="/pagina3.html">Página 3</a>
+  </div>
+</body>
+</html>
