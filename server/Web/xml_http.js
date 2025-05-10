@@ -1,7 +1,7 @@
 /* Main function, that handles request and responses in background.
  * Response functions are handled if response code equals to OK 200. */
 function updateMultiple(formUpd, callBack, userName, userPassword) {
- xmlHttp = GetXmlHttpObject();
+ let xmlHttp = GetXmlHttpObject();
  if(xmlHttp == null) {
   alert("XmlHttp not initialized!");
   return 0;
@@ -36,15 +36,13 @@ function updateMultiple(formUpd, callBack, userName, userPassword) {
  }
 }
 
-function oldProcessResponse(xmlDoc) {
- textElementArr = xmlDoc.getElementsByTagName("data");
+function processResponse(xmlDoc) {
+ textElementArr = xmlDoc.getElementsByTagName("text");
  for(var i = 0; i < textElementArr.length; i++) {
   try {
    elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
    elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
-//    document.getElementById(elId).value = elValue;
-    chartObjData.new_value = elValue;
-    
+   document.getElementById(elId).value = elValue;
   }
   catch(error) {
    if(elId == undefined){
@@ -52,43 +50,72 @@ function oldProcessResponse(xmlDoc) {
    }
    else if(elValue == undefined) {
     elValue = "";
-    // document.getElementById(elId).value = elValue;
-        chartObjData.new_value = elValue;
+    document.getElementById(elId).value = elValue;
    }
   }
  }
- textElementArr = xmlDoc.getElementsByTagName("time");
- for(var i = 0; i < textElementArr.length; i++) {
-  try {
-   elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
-   elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
-//    document.getElementById(elId).value = elValue;
-    chartObjData.new_time = elValue;
-  }
-  catch(error) {
-   if(elId == undefined){
-    continue;
-   }
-   else if(elValue == undefined) {
-    elValue = "";
-    // document.getElementById(elId).value = elValue;
-        chartObjData.new_time = elValue;
-   }
-  }
- }
+// data = xmlDoc.getElementsByTagName("chart");
+//  try {
+//    bridgeVars.openBridge = parseInt(data[0].childNodes[0].nodeValue);
+//  } catch (error) {
+//    for (var mesasure in bridgeVars) {
+//      if (mesasure == undefined)
+//        bridgeVars[mesasure] = "";
+//    }
+//  }
+// }
+// textElementArr = xmlDoc.getElementsByTagName("data");
+// for(var i = 0; i < textElementArr.length; i++) {
+//  try {
+//   elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
+//   elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
+////    document.getElementById(elId).value = elValue;
+//    chartObjData.new_value = elValue;
+//    
+//  }
+//  catch(error) {
+//   if(elId == undefined){
+//    continue;
+//   }
+//   else if(elValue == undefined) {
+//    elValue = "";
+//    // document.getElementById(elId).value = elValue;
+//        chartObjData.new_value = elValue;
+//   }
+//  }
+// }
+// textElementArr = xmlDoc.getElementsByTagName("time");
+// for(var i = 0; i < textElementArr.length; i++) {
+//  try {
+//   elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
+//   elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
+////    document.getElementById(elId).value = elValue;
+//    chartObjData.new_time = elValue;
+//  }
+//  catch(error) {
+//   if(elId == undefined){
+//    continue;
+//   }
+//   else if(elValue == undefined) {
+//    elValue = "";
+//    // document.getElementById(elId).value = elValue;
+//        chartObjData.new_time = elValue;
+//   }
+//  }
+// }
 }
 
-function processResponse(xmlDoc) {
-  data = xmlDoc.getElementsByTagName("chart");
-  try {
-    bridgeVars.openBridge = parseInt(data[0].childNodes[0].nodeValue);
-  } catch (error) {
-    for (var mesasure in bridgeVars) {
-      if (mesasure == undefined)
-        bridgeVars[mesasure] = "";
-    }
-  }
- }
+//function processResponse(xmlDoc) {
+//  data = xmlDoc.getElementsByTagName("chart");
+//  try {
+//    bridgeVars.openBridge = parseInt(data[0].childNodes[0].nodeValue);
+//  } catch (error) {
+//    for (var mesasure in bridgeVars) {
+//      if (mesasure == undefined)
+//        bridgeVars[mesasure] = "";
+//    }
+//  }
+// }
 
 /* XMLHttpRequest object specific functions */
 function GetXmlHttpObject() { //init XMLHttp object

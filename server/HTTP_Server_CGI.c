@@ -11,6 +11,9 @@
 
 // TODO: move the auth vars to an authentication package with the flash read and other related utils
 
+char time_1[24];
+char date[24];
+
 extern osEventFlagsId_t auth_event_id;
 
 extern osMessageQueueId_t bridge_Q;
@@ -24,6 +27,11 @@ static uint8_t open_bridge_last_status;
 static credentials_t credentials;
 static uint8_t auth_done = 0;
 static uint8_t auth_success = 0;
+
+extern RTC_HandleTypeDef RtcHandle;
+extern RTC_TimeTypeDef stimestructureget;
+extern RTC_DateTypeDef sdatestructureget;
+
 
 
 uint8_t hexCharToByte(char c) {
@@ -166,6 +174,16 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
       }
       len = (uint32_t)sprintf (buf, &env[2], open_bridge_last_status);
       break;
+		case 'i':
+			HAL_RTC_GetTime(&RtcHandle, &stimestructureget, RTC_FORMAT_BIN);
+			sprintf(time_1, "%02d:%02d:%02d", stimestructureget.Hours, stimestructureget.Minutes, stimestructureget.Seconds);
+			len = (uint32_t)sprintf (buf, &env[1],time_1);
+			break;
+		case 'k':
+          HAL_RTC_GetDate(&RtcHandle, &sdatestructureget, RTC_FORMAT_BIN);
+          sprintf(date, "%.2d-%.2d-%.2d",  sdatestructureget.Month, sdatestructureget.Date, 2000 + sdatestructureget.Year);
+			len = (uint32_t)sprintf (buf, &env[1],date);
+			break;
   }
   return (len);
 }

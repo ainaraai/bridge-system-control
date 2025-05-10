@@ -47,8 +47,8 @@
 #endif
 
 #include "rl_net.h"
-#include "RTC.h"
-
+#include "rtc_1.h"
+#include "sntp_1.h"
 /* Exported types ------------------------------------------------------------*/
 
 typedef struct {
