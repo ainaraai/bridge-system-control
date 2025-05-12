@@ -13,5 +13,6 @@ control.html,
 usuarios.html,
 index.htm,
 functionalities.html,
-control.css 
+control.css,
+sntp.html 
 TO Web.c RTE NOPRINT ROOT(Web)
