@@ -1,5 +1,4 @@
 color-modes.js,
-chart.cgx,
 xml_http.js,
 background.jpg,
 warning.png,
@@ -14,5 +13,8 @@ usuarios.html,
 index.htm,
 functionalities.html,
 control.css,
-sntp.html 
+sntp.html,
+time.cgx,
+time_2.cgx,
+control.cgx 
 TO Web.c RTE NOPRINT ROOT(Web)

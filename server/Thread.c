@@ -16,5 +16,8 @@ void Th_bridge (void *argument) {
     osDelay(5000);
     open_bridge = 1;
     osMessageQueuePut(bridge_Q, &open_bridge, 0U, 0U);
+    osDelay(5000);
+    open_bridge = 2;
+    osMessageQueuePut(bridge_Q, &open_bridge, 0U, 0U);
   }
 }

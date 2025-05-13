@@ -58,20 +58,42 @@
             <div class="col-4 p-3 bg-black bg-opacity-50 text-white fw-bold rounded text-center" style="height: 700px;">
                 <div class="row">
                     <h2 id="Barrera" class="text-center">Barrera</h2>
-                    <div class="col d-flex justify-content-around align-items-center mt-4">
-                        <button type="button" id="barrierOpenedButton" class="btn btn-outline-success rounded-circle" style="width: 100px; height: 100px;"></button>
-                        <button type="button" id="barrierClosedButton" class="btn btn-outline-danger rounded-circle" style="width: 100px; height: 100px;"></button>
-                    </div>
+                    <form id="barrierForm" action="control.html" method="post" target="frame">
+                        <input type="hidden" name="barrier" id="barrierInput">
+    
+                        <div class="col d-flex justify-content-around align-items-center mt-4">
+                            <button 
+                                type="button" 
+                                onclick="updateBarrierStatus(1)"
+                                id="barrierOpenedButton" 
+                                class="btn btn-outline-success rounded-circle active" 
+                                style="width: 100px; height: 100px;">
+                            </button>
+                            <button 
+                                type="button" 
+                                onclick="updateBarrierStatus(0)"
+                                id="barrierClosedButton" 
+                                class="btn btn-outline-danger rounded-circle" 
+                                style="width: 100px; height: 100px;">
+                            </button>
+                        </div>
+                    </form>
                     <script>
-                        function updateBarrierStatus() {
-                            const barrierOpenedButton = document.getElementById("barrierOpenedButton");
-                            const barrierClosedButton = document.getElementById("barrierClosedButton");
-                            if (window.bridgeVars.barrier === 0) {
-                                barrierOpenedButton.classList.add("active");
-                                barrierClosedButton.classList.remove("active");
-                            } else {
-                                barrierClosedButton.classList.add("active");
-                                barrierOpenedButton.classList.remove("active");
+                        function updateBarrierStatus(status) {
+                            if (window.bridgeVars.barrier != status) {
+                                window.bridgeVars.barrier = status;
+                                document.getElementById('barrierInput').value = status;
+                                let barrierOpenedButton = document.getElementById("barrierOpenedButton");
+                                let barrierClosedButton = document.getElementById("barrierClosedButton");
+                                
+                                if (status === 1) {
+                                    barrierOpenedButton.classList.add("active");
+                                    barrierClosedButton.classList.remove("active");
+                                } else {
+                                    barrierClosedButton.classList.add("active");
+                                    barrierOpenedButton.classList.remove("active");
+                                }
+                                document.getElementById("barrierForm").submit();
                             }
                         }
                     </script>
@@ -109,15 +131,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h2 id="bridgeStatus">Window values</h2>
+                        <h2>Window values</h2>
                         <p>Bridge status: <span id="bridgeStatusValue">0</span></p>
                         <p>Emergency stop: <span id="emergencyStopValue">0</span></p>
                         <p>Barrier status: <span id="barrierStatusValue">0</span></p>
+                        <p>Time: <span id="timeValue">0</span></p>
+                        <p>Date: <span id="dateValue">0</span></p>
                         <script>
                             function updateWindowVariables() {
                                 document.getElementById("bridgeStatusValue").innerText = window.bridgeVars.bridgeStatus;
                                 document.getElementById("emergencyStopValue").innerText = window.bridgeVars.emergencyStop;
                                 document.getElementById("barrierStatusValue").innerText = window.bridgeVars.barrier;
+                                document.getElementById("timeValue").innerText = window.bridgeVars.time;
+                                document.getElementById("dateValue").innerText = window.bridgeVars.date;
                             }
                         </script>
                     </div>
@@ -136,10 +162,11 @@
             bridgeStatus: 0, /* Closed = 0, Mid = 1, Opened = 2*/
             emergencyStop: 0,
             barrier: 0, /* Closed = 0, Opened = 1*/
-            vehicleWarn: 0
+            vehicleWarn: 0,
+            time: "Not a time",
+            date: "Not a date"
         };
         function updateBridgeStatus() {
-            updateBarrierStatus();
             updateWindowVariables();
             switch (window.bridgeVars.bridgeStatus) {
                 case 0:
@@ -155,14 +182,13 @@
                 default:
                     break;
             }
-            document.getElementById("bridgeStatus").innerText = window.bridgeVars.bridgeStatus;
         }
     </script>
     <script src="xml_http.js"></script>
     <script>
-        var chartObj = new periodicObj("chart.cgx", 1000);
+        var controlObj = new periodicObj("control.cgx", 1000);
         setInterval(function () {
-            updateMultiple(chartObj, updateBridgeStatus);
+            updateMultiple(controlObj, updateBridgeStatus);
         }, 1000);
     </script>
 </body>

@@ -27,6 +27,8 @@ static uint8_t open_bridge_last_status;
 static credentials_t credentials;
 static uint8_t auth_done = 0;
 static uint8_t auth_success = 0;
+static uint8_t barrier = 0;
+static uint8_t emergency_stop = 0;
 
 extern RTC_HandleTypeDef RtcHandle;
 extern RTC_TimeTypeDef stimestructureget;
@@ -89,8 +91,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
       } else if (strncmp (var, "nombre=", 7) == 0) {
 				strncpy(user_data.hexStringLocal, var + 7, 19);
         printf("------------------------------\nEl usuario registrado es: %s\n",user_data.hexStringLocal);
-      }
-			else if (strncmp (var, "pass=", 5) == 0) {
+      } else if (strncmp (var, "pass=", 5) == 0) {
 				const char *str = var + 5;
 				  if (str == NULL || str[0] == '\0') {
 						printf("borrando password");
@@ -109,8 +110,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 				}
 				printf("\n");
 
-      }
-			 else if (strncmp (var, "id=", 3) == 0) {
+      } else if (strncmp (var, "id=", 3) == 0) {
 				char *hexString = var + 3;
 				for (size_t i = 0; i < 5; i++) {
 					char high = hexString[i * 2];
@@ -123,6 +123,8 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 				for (int i = 0; i < 5; i++) {
 					printf("%02X\n ", user_data.id[i]);  // solo imprime los números en hexadecimal
 				}
+      } else if (strncmp(var, "barrier=", 8) == 0) {
+        barrier = atoi(var+8);
       }
     }
   } while (data);
@@ -166,23 +168,29 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
 
   // Analyze a 'c' script line starting position 2
   switch (env[0]) {
-    case 'b':
+    case 'b': // Bridge
       osMessageQueueGet(bridge_Q, &open_bridge, NULL, 0U);   // wait for message
       if (open_bridge_last_status != open_bridge) {
         open_bridge_last_status = open_bridge;
       }
       len = (uint32_t)sprintf (buf, &env[2], open_bridge_last_status);
       break;
-		case 'i':
+    case 'r': // Barrier
+      len = (uint32_t)sprintf (buf, &env[2], barrier);
+      break;
+		case 'i': // Time
 			HAL_RTC_GetTime(&RtcHandle, &stimestructureget, RTC_FORMAT_BIN);
 			sprintf(time_1, "%02d:%02d:%02d", stimestructureget.Hours, stimestructureget.Minutes, stimestructureget.Seconds);
-			len = (uint32_t)sprintf (buf, &env[1],time_1);
+			len = (uint32_t)sprintf (buf, &env[2], time_1);
 			break;
-		case 'k':
-          HAL_RTC_GetDate(&RtcHandle, &sdatestructureget, RTC_FORMAT_BIN);
-          sprintf(date, "%.2d-%.2d-%.2d",  sdatestructureget.Month, sdatestructureget.Date, 2000 + sdatestructureget.Year);
-			len = (uint32_t)sprintf (buf, &env[1],date);
+		case 'k': // Date
+      HAL_RTC_GetDate(&RtcHandle, &sdatestructureget, RTC_FORMAT_BIN);
+      sprintf(date, "%.2d-%.2d-%.2d", sdatestructureget.Month, sdatestructureget.Date, 2000 + sdatestructureget.Year);
+			len = (uint32_t)sprintf (buf, &env[2], date);
 			break;
+    case 's': // Emergency stop
+      len = (uint32_t)sprintf (buf, &env[2], emergency_stop);
+      break;
   }
   return (len);
 }
@@ -196,7 +204,6 @@ const char *netCGI_Redirect (const char *file_name) {
   if (auth_success) {
 		auth_success=0;
     return ("/functionalities.html");
-		
   }
   return NULL;
 }

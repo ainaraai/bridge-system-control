@@ -54,26 +54,34 @@
 		  </thead>
 		  <tbody>
 			<tr>
-				  <td><input type="text" readonly id="time_value" value="%s"></td>
-				  <td><input type="text" readonly id="date_value" value="%s"></td>
+				  <td><input type="text" readonly id="time_value" value=""></td>
+				  <td><input type="text" readonly id="date_value" value=""></td>
 			</tr>
 		  </tbody>
 		</table>
 	</form>
 	</div>
 	 </main>
+     <script>
+        window.bridgeVars = {
+            bridgeStatus: 0, /* Closed = 0, Mid = 1, Opened = 2*/
+            emergencyStop: 0,
+            barrier: 0, /* Closed = 0, Opened = 1*/
+            vehicleWarn: 0,
+            time: "Not a time",
+            date: "Not a date"
+        };
+        function updateTime() {
+            document.getElementById("time_value").value = window.bridgeVars.time;
+            document.getElementById("date_value").value = window.bridgeVars.date;
+        }
+     </script>
     <script src="xml_http.js"></script>
     <script>
-        var chartObj = new periodicObj("time.cgx", 500);
+        var controlObj = new periodicObj("control.cgx", 1000);
         setInterval(function () {
-            updateMultiple(chartObj);
-        }, 500);
-	</script>
-		<script>
-		var chartObj_2 = new periodicObj("time_2.cgx", 500);
-        setInterval(function () {
-            updateMultiple(chartObj_2);
-        }, 500);
+            updateMultiple(controlObj, updateTime);
+        }, 1000);
     </script>
 </body>
 </html>

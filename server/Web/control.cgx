@@ -1,0 +1,8 @@
+t <control>
+c b <bridge>%d</bridge>
+c r <barrier>%d</barrier>
+c i <time>%s</time>
+c k <date>%s</date>
+c s <stop>%d</stop>
+t </control>
+.

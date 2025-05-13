@@ -1,7 +1,0 @@
-t <form>
-t <text>
-t <id>date_value</id>
-c k<value>%s</value>
-t </text>
-t </form>
-.

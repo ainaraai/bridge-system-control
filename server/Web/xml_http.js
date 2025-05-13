@@ -36,24 +36,24 @@ function updateMultiple(formUpd, callBack, userName, userPassword) {
  }
 }
 
-function processResponse(xmlDoc) {
- textElementArr = xmlDoc.getElementsByTagName("text");
- for(var i = 0; i < textElementArr.length; i++) {
-  try {
-   elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
-   elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
-   document.getElementById(elId).value = elValue;
-  }
-  catch(error) {
-   if(elId == undefined){
-    continue;
-   }
-   else if(elValue == undefined) {
-    elValue = "";
-    document.getElementById(elId).value = elValue;
-   }
-  }
- }
+// function processResponse(xmlDoc) {
+//  textElementArr = xmlDoc.getElementsByTagName("text");
+//  for(var i = 0; i < textElementArr.length; i++) {
+//   try {
+//    elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
+//    elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
+//    document.getElementById(elId).value = elValue;
+//   }
+//   catch(error) {
+//    if(elId == undefined){
+//     continue;
+//    }
+//    else if(elValue == undefined) {
+//     elValue = "";
+//     document.getElementById(elId).value = elValue;
+//    }
+//   }
+//  }
 // data = xmlDoc.getElementsByTagName("chart");
 //  try {
 //    bridgeVars.openBridge = parseInt(data[0].childNodes[0].nodeValue);
@@ -103,19 +103,24 @@ function processResponse(xmlDoc) {
 //   }
 //  }
 // }
-}
-
-//function processResponse(xmlDoc) {
-//  data = xmlDoc.getElementsByTagName("chart");
-//  try {
-//    bridgeVars.openBridge = parseInt(data[0].childNodes[0].nodeValue);
-//  } catch (error) {
-//    for (var mesasure in bridgeVars) {
-//      if (mesasure == undefined)
-//        bridgeVars[mesasure] = "";
-//    }
-//  }
 // }
+
+function processResponse(xmlDoc) {
+  data = xmlDoc.getElementsByTagName("control");
+  try {
+    bridgeVars.bridgeStatus  = parseInt(data[0].childNodes[0].textContent);
+    bridgeVars.barrier       = parseInt(data[0].childNodes[1].textContent);
+    bridgeVars.time          = data[0].childNodes[2].textContent;
+    bridgeVars.date          = data[0].childNodes[3].textContent;
+    bridgeVars.emergencyStop = parseInt(data[0].childNodes[4].textContent);
+    
+  } catch (error) {
+    for (var mesasure in bridgeVars) {
+      if (mesasure == undefined)
+        bridgeVars[mesasure] = "";
+    }
+  }
+}
 
 /* XMLHttpRequest object specific functions */
 function GetXmlHttpObject() { //init XMLHttp object

@@ -103,7 +103,7 @@
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>5</nTsel>
+        <nTsel>6</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -217,18 +217,18 @@
         </Mm>
       </MemoryWindow1>
       <ScvdPack>
-        <Filename>C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.8.0\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
+        <Filename>C:\Users\alber\AppData\Local\Arm\Packs\ARM\CMSIS\5.8.0\CMSIS\RTOS2\RTX\RTX5.scvd</Filename>
         <Type>ARM.CMSIS.5.8.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <ScvdPack>
-        <Filename>C:\Keil_v5\ARM\PACK\Keil\ARM_Compiler\1.6.3\EventRecorder.scvd</Filename>
+        <Filename>C:\Users\alber\AppData\Local\Arm\Packs\Keil\ARM_Compiler\1.6.3\EventRecorder.scvd</Filename>
         <Type>Keil.ARM_Compiler.1.6.3</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <ScvdPack>
-        <Filename>C:\Keil_v5\ARM\PACK\Keil\MDK-Middleware\7.13.0\Network\Network.scvd</Filename>
-        <Type>Keil.MDK-Middleware.7.13.0</Type>
+        <Filename>C:\Users\alber\AppData\Local\Arm\Packs\Keil\MDK-Middleware\7.15.0\Network\Network.scvd</Filename>
+        <Type>Keil.MDK-Middleware.7.15.0</Type>
         <SubType>1</SubType>
       </ScvdPack>
       <Tracepoint>
@@ -254,7 +254,7 @@
         <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>1</aSer4>
+        <aSer4>0</aSer4>
         <StkLoc>0</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -448,18 +448,6 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Web\chart.cgx</PathWithFileName>
-      <FilenameWithoutPath>chart.cgx</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>14</FileNumber>
-      <FileType>9</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
       <PathWithFileName>.\Web\xml_http.js</PathWithFileName>
       <FilenameWithoutPath>xml_http.js</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -467,7 +455,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>15</FileNumber>
+      <FileNumber>14</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -479,7 +467,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>16</FileNumber>
+      <FileNumber>15</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -491,7 +479,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>17</FileNumber>
+      <FileNumber>16</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -503,7 +491,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>18</FileNumber>
+      <FileNumber>17</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -515,7 +503,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>19</FileNumber>
+      <FileNumber>18</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -527,7 +515,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>20</FileNumber>
+      <FileNumber>19</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -539,7 +527,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>21</FileNumber>
+      <FileNumber>20</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -551,7 +539,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>22</FileNumber>
+      <FileNumber>21</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -563,7 +551,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>23</FileNumber>
+      <FileNumber>22</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -575,7 +563,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>23</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -587,7 +575,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>25</FileNumber>
+      <FileNumber>24</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -599,7 +587,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>25</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -611,7 +599,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>27</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -623,7 +611,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>28</FileNumber>
+      <FileNumber>27</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -635,7 +623,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>29</FileNumber>
+      <FileNumber>28</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -647,7 +635,7 @@
     </File>
     <File>
       <GroupNumber>2</GroupNumber>
-      <FileNumber>30</FileNumber>
+      <FileNumber>29</FileNumber>
       <FileType>9</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -657,11 +645,23 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>2</GroupNumber>
+      <FileNumber>30</FileNumber>
+      <FileType>9</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\Web\control.cgx</PathWithFileName>
+      <FilenameWithoutPath>control.cgx</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
     <GroupName>::CMSIS</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
@@ -669,7 +669,7 @@
 
   <Group>
     <GroupName>::CMSIS Driver</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
@@ -677,7 +677,7 @@
 
   <Group>
     <GroupName>::Compiler</GroupName>
-    <tvExp>0</tvExp>
+    <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>1</RteFlg>
