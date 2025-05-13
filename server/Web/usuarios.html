@@ -27,6 +27,28 @@
         .translucid {
             background-color: rgba(0, 0, 0, 0.432);
         }
+
+	  .centered-table {
+		margin: auto;
+		width: 90%;
+		text-align: center;
+		border-collapse: collapse;
+	  }
+
+	  .centered-table td,
+	  .centered-table th {
+		vertical-align: middle;
+	  }
+
+	  .centered-table input {
+		width: 90%;
+		margin: auto;
+	  }
+	  .table th:nth-child(1), .table td:nth-child(1) { width: 15%; }
+	  .table th:nth-child(2), .table td:nth-child(2) { width: 15%; }
+	  .table th:nth-child(3), .table td:nth-child(3) { width: 25%; }
+	  .table th:nth-child(4), .table td:nth-child(4) { width: 25%; }
+	  .table th:nth-child(5), .table td:nth-child(5) { width: 20%; }
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
@@ -39,90 +61,98 @@
 </head>
 
 <body class="d-flex align-items-center justify-content-center py-4">
-    <main class="d-flex translucid align-items-center w-100">
-	  <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
-	  <h1 class="display-5 fw-bold text-center mb-4">User Managment</h1>
-		<form action="usuarios.html" method="POST">
-		<table class="table table-dark table-bordered align-middle text-center">
-		  <thead>
-			<tr>
-			  <th>ID</th>
-			  <th>Status</th>
-			  <th>Name</th>
-			  <th>Password</th>
-			  <th>Send</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr>
-				  <td>E3B0B7F713</td>
-				  <td id="estado1">Ocupado</td>
-				  <td><input type="text" name="nombre" class="form-control" maxlength="19" pattern=".{1,19}" title="Introduce como máximo 19 caracteres"></td>
-				  <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" title="Introduce exactamente 4 digitos numericos (0-9)"></td>
-				  <td><input type="hidden" name="id" value="E3B0B7F713"><button type="submit" class="btn btn-primary">Send</button></td>
-			</tr>
-			<tr>
-				  <td>9319C2F7BF</td>
-				  <td id="estado2">Ocupado</td>
-				  <td><input type="text" name="nombre" class="form-control" maxlength="19" pattern=".{1,19}" title="Introduce como máximo 19 caracteres"></td>
-				  <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" title="Introduce exactamente 4 dígitos numéricos (0-9)"></td>
-				  <td><input type="hidden" name="id" value="9319C2F7BF"><button type="submit" class="btn btn-primary">Send</button></td>
-			</tr>
-			<tr>
-				  <td>7AD7E50048</td>
-				  <td id="estado3">Libre</td>
-				  <td><input type="text" name="nombre" class="form-control" maxlength="19" pattern=".{1,19}" title="Introduce como máximo 19 caracteres"></td>
-				  <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" title="Introduce exactamente 4 dígitos numéricos (0-9)"></td>
-				  <td><input type="hidden" name="id" value="7AD7E50048"><button type="submit" class="btn btn-primary">Send</button></td>
-			</tr>
-			<tr>
-				  <td>1393CCF7BB</td>
-				  <td id="estado4">Libre</td>
-				  <td><input type="text" name="nombre" class="form-control" maxlength="19"  pattern=".{1,19}" title="Introduce como máximo 19 caracteres"></td>
-				  <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" title="Introduce exactamente 4 dígitos numéricos (0-9)"></td>
-				   <td><input type="hidden" name="id" value="1393CCF7BB"><button type="submit" class="btn btn-primary">Send</button></td>
-			</tr>
-			<tr>
-				  <td>9584D78A4C</td>
-				  <td id="estado5">Libre</td>
-				  <td><input type="text" name="nombre" class="form-control" maxlength="19" pattern=".{1,19}" title="Introduce como máximo 19 caracteres"></td>
-				  <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" title="Introduce exactamente 4 dígitos numéricos (0-9)"></td>
-				  <td><input type="hidden" name="id" value="9584D78A4C"><button type="submit" class="btn btn-primary">Send</button></td>
-			</tr>
-		  </tbody>
-		</table>
-	</form>
-	</div>
+  <main class="d-flex translucid align-items-center w-100">
+    <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
+      <h1 class="display-5 fw-bold text-center mb-4">User Management</h1>
 
-    </main>
-	<script>
-        let d = new Date();
-        alert("Today's date is " + d);
-    </script>
-	<script>
-		document.addEventListener("DOMContentLoaded", function () {
-		  const form = document.getElementById("userForm");
+      <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Status</th>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Send</th>
+          </tr>
+        </thead>
+      </table>
 
-		  form.addEventListener("submit", function (event) {
-			const button = event.submitter;
-			const row = button.closest("tr");
+      <form action="usuarios.html" method="POST">
+        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+          <tr>
+            <td>E3B0B7F713</td>
+            <td id="estado1">Ocupado</td>
+            <td><input type="text" name="nombre" class="form-control" maxlength="19" required></td>
+            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" required></td>
+            <td>
+              <input type="hidden" name="id" value="E3B0B7F713">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+	  
+      <form action="usuarios.html" method="POST">
+        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+          <tr>
+            <td>9319C2F7BF</td>
+            <td id="estado2">Libre</td>
+            <td><input type="text" name="nombre" class="form-control" maxlength="19" required></td>
+            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" required></td>
+            <td>
+              <input type="hidden" name="id" value="9319C2F7BF">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </td>
+          </tr>
+        </table>
+      </form>
 
-			const nombre = row.querySelector('input[name="nombre"]').value.trim();
-			const pass = row.querySelector('input[name="pass"]').value.trim();
+      <form action="usuarios.html" method="POST">
+        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+          <tr>
+            <td>ABD8EF1234</td>
+            <td id="estado3">Libre</td>
+            <td><input type="text" name="nombre" class="form-control" maxlength="19" required></td>
+            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" required></td>
+            <td>
+              <input type="hidden" name="id" value="ABD8EF1234">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </td>
+          </tr>
+        </table>
+      </form>
 
-			if ((nombre && !pass) || (!nombre && pass)) {
-			  alert("Both fields must be filled: name and password.");
-			  event.preventDefault();
-			} else if (!nombre && !pass) {
-			  const confirmDelete = confirm("Both fields are empty. Do you want to delete the user?");
-			  if (!confirmDelete) {
-				event.preventDefault();
-			  }
-			}
-		  });
-		});
-	</script>
+      <form action="usuarios.html" method="POST">
+        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+          <tr>
+            <td>56AD3E1923</td>
+            <td id="estado4">Ocupado</td>
+            <td><input type="text" name="nombre" class="form-control" maxlength="19" required></td>
+            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" required></td>
+            <td>
+              <input type="hidden" name="id" value="56AD3E1923">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </td>
+          </tr>
+        </table>
+      </form>
 
+      <form action="usuarios.html" method="POST">
+        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+          <tr>
+            <td>78FE123FAB</td>
+            <td id="estado5">Libre</td>
+            <td><input type="text" name="nombre" class="form-control" maxlength="19" required></td>
+            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric" required></td>
+            <td>
+              <input type="hidden" name="id" value="78FE123FAB">
+              <button type="submit" class="btn btn-primary">Send</button>
+            </td>
+          </tr>
+        </table>
+      </form>
+
+    </div>
+  </main>
 </body>
-
 </html>

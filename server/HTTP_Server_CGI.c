@@ -103,7 +103,6 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 						}
 					}
 
-
 				printf("Password como uint8_t: ");
 				for (int i = 0; i < 4; i++) {
 						printf("%d ", user_data.password_user[i]);
