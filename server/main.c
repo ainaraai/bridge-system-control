@@ -108,7 +108,7 @@ int main(void)
 #ifdef RTE_CMSIS_RTOS2
   /* Initialize CMSIS-RTOS2 */
   osKernelInitialize ();
-
+  
   /* Create application main thread */
 //  osThreadNew(app_main, NULL, &app_main_attr);
   osThreadNew(Th_main, NULL, NULL); // los demás hilos los lanza el main
