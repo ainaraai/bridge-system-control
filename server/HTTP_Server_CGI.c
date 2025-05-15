@@ -29,6 +29,7 @@ static uint8_t auth_done = 0;
 static uint8_t auth_success = 0;
 static uint8_t barrier = 0;
 static uint8_t emergency_stop = 0;
+static uint8_t warning_boat = 0;
 
 extern RTC_HandleTypeDef RtcHandle;
 extern RTC_TimeTypeDef stimestructureget;
@@ -190,6 +191,9 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
 			break;
     case 's': // Emergency stop
       len = (uint32_t)sprintf (buf, &env[2], emergency_stop);
+      break;
+    case 'w': // Warning boat
+      len = (uint32_t)sprintf (buf, &env[2], warning_boat);
       break;
   }
   return (len);

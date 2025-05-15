@@ -524,16 +524,6 @@
               <FilePath>.\Web\sntp.html</FilePath>
             </File>
             <File>
-              <FileName>time.cgx</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Web\time.cgx</FilePath>
-            </File>
-            <File>
-              <FileName>time_2.cgx</FileName>
-              <FileType>9</FileType>
-              <FilePath>.\Web\time_2.cgx</FilePath>
-            </File>
-            <File>
               <FileName>control.cgx</FileName>
               <FileType>9</FileType>
               <FilePath>.\Web\control.cgx</FilePath>

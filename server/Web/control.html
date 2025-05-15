@@ -19,7 +19,7 @@
 
 
     <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white">Panel de control</a>
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="functionalities.html">Menú principal</a>
     </header>
 
     <div class="container-xxl d-flex flex-column">
@@ -33,26 +33,13 @@
             <div class="mt-auto col-4 p-3 bg-black bg-opacity-50 text-white fw-bold rounded text-center" style="height: 200px; width: 290px;">
                 <div class="row">
                     <div class="col">
-                        <h2 class="text-center">Aviso coche</h2>
+                        <h2 class="text-center">Aviso barco</h2>
                     </div>
                 </div>
                 <div class="row p-2">
                     <div class="col">
                         <img id="warningImg" src="warning.png" alt="warning" style="width: 100px; height: 100px;">
                     </div>
-                    <!-- <script>
-                        fetch('get_warning_status')
-                            .then(response => response.json())
-                            .then(data => {
-                                const warningImg = document.getElementById('warningImg');
-                                if (data.showWarning) {
-                                    warningImg.style.display = 'block';
-                                } else {
-                                    warningImg.style.display = 'none';
-                                }
-                            })
-                            .catch(error => console.error('Error fetching warning status:', error));
-                    </script> -->
                 </div>
             </div>
             <div class="col-4 p-3 bg-black bg-opacity-50 text-white fw-bold rounded text-center" style="height: 700px;">
@@ -66,7 +53,7 @@
                                 type="button" 
                                 onclick="updateBarrierStatus(1)"
                                 id="barrierOpenedButton" 
-                                class="btn btn-outline-success rounded-circle active" 
+                                class="btn btn-outline-success rounded-circle" 
                                 style="width: 100px; height: 100px;">
                             </button>
                             <button 
@@ -98,61 +85,29 @@
                         }
                     </script>
                 </div>
-                <div class="row mt-5">
-                    <h2 id="Consumo" class="text-center">Panel de tráfico</h2>
-                    <form action="control.html" method="post" target="frame">
-                        <div style="display: none;">
-                            <input type="text" name="message">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Primera línea LCD" name="lcd1">
-                        </div>
-                        <div class="input-group mb-3">
-                            <input type="text" class="form-control" placeholder="Segunda línea LCD" name="lcd2">
-                        </div>
-
-                        <button class="btn btn-primary" type="submit" id="button-addon2">Enviar</button>
-                    </form>
-                </div>
                 <div class="mt-5">
-                    <h2 id="Consumo" class="text-center">Parada de emergencia</h2>
+                    <h2 id="EmergencyStop" class="text-center">Parada de emergencia</h2>
                     <div class="col mt-4">
-                        <form action="toggle_emergency_stop" method="post"></form>
-                            <button id="emergencyButton" style="border: none; background: none;">
+                        <form id="toggle_emergency_stop" action="control.html" method="post" target="frame">
+                            <button id="emergencyButton" style="border: none; background: none;" onclick="toggleEmergencyState(event)">
                                 <img id="stopImg" src="stop.png" alt="stop" style="width: 100px; height: 100px;">
                             </button>
                             <input type="hidden" name="emergencyStop" value="toggle">
                         </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 align-self-start mt-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <h2>Window values</h2>
-                        <p>Bridge status: <span id="bridgeStatusValue">0</span></p>
-                        <p>Emergency stop: <span id="emergencyStopValue">0</span></p>
-                        <p>Barrier status: <span id="barrierStatusValue">0</span></p>
-                        <p>Time: <span id="timeValue">0</span></p>
-                        <p>Date: <span id="dateValue">0</span></p>
                         <script>
-                            function updateWindowVariables() {
-                                document.getElementById("bridgeStatusValue").innerText = window.bridgeVars.bridgeStatus;
-                                document.getElementById("emergencyStopValue").innerText = window.bridgeVars.emergencyStop;
-                                document.getElementById("barrierStatusValue").innerText = window.bridgeVars.barrier;
-                                document.getElementById("timeValue").innerText = window.bridgeVars.time;
-                                document.getElementById("dateValue").innerText = window.bridgeVars.date;
+                            let emergencyActive = false;
+                            function toggleEmergencyState(event) {
+                                emergencyActive = !emergencyActive;
+                                const img = document.getElementById("stopImg");
+                                if (emergencyActive) {
+                                    img.style.filter = "grayscale(100%)";
+                                } else {
+                                    img.style.filter = "none";
+                                }
                             }
                         </script>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row justify-content-center p-5 gap-3">
-            <div class="text-center">
-                <a class="btn btn-primary btn-lg" type="button" id="change page" href="./estadisticas_ajustes.html">Estadísticas y ajustes de usuarios</a>
             </div>
         </div>
     </div>
@@ -160,14 +115,19 @@
     <script>
         window.bridgeVars = {
             bridgeStatus: 0, /* Closed = 0, Mid = 1, Opened = 2*/
-            emergencyStop: 0,
             barrier: 0, /* Closed = 0, Opened = 1*/
-            vehicleWarn: 0,
+            boatWarn: 0,
             time: "Not a time",
             date: "Not a date"
         };
         function updateBridgeStatus() {
-            updateWindowVariables();
+            const img = document.getElementById("warningImg");
+            if (window.bridgeVars.boatWarn == 0) {
+                img.style.filter = "grayscale(100%)";
+            } else {
+                img.style.filter = "none";
+            }
+
             switch (window.bridgeVars.bridgeStatus) {
                 case 0:
                     document.getElementById("backgroud").className = "row justify-content-between p-4 gap-3 bgimg-closed";

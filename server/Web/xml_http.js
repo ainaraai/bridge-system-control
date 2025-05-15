@@ -113,6 +113,7 @@ function processResponse(xmlDoc) {
     bridgeVars.time          = data[0].childNodes[2].textContent;
     bridgeVars.date          = data[0].childNodes[3].textContent;
     bridgeVars.emergencyStop = parseInt(data[0].childNodes[4].textContent);
+    bridgeVars.boatWarn      = parseInt(data[0].childNodes[5].textContent);
     
   } catch (error) {
     for (var mesasure in bridgeVars) {
