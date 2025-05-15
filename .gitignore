@@ -2,6 +2,13 @@
 */Objects/
 */DebugConfig/
 */Listings/
+*.inp
+*.Bak
+*/RTE/Network/Net_Config_ETH_0.h
+*/Web/Web
+*.uvoptx
+*.uvprojx
+*.uiguix.*
 
 # Project auto-generated .name files
 *.a.arrojo

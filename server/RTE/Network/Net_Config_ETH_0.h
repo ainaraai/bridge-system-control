@@ -40,17 +40,17 @@
 //     <s.15>IP Address
 //     <i>Static IPv4 Address in text representation
 //     <i>Default: "192.168.0.100"
-#define ETH0_IP4_ADDR           "192.168.1.200"
+#define ETH0_IP4_ADDR           "192.168.68.155"
 
 //     <s.15>Subnet mask
 //     <i>Local Subnet mask in text representation
 //     <i>Default: "255.255.255.0"
-#define ETH0_IP4_MASK           "255.255.255.0"
+#define ETH0_IP4_MASK           "255.255.252.0"
 
 //     <s.15>Default Gateway
 //     <i>IP Address of Default Gateway in text representation
 //     <i>Default: "192.168.0.254"
-#define ETH0_IP4_GATEWAY        "192.168.1.1"
+#define ETH0_IP4_GATEWAY        "192.168.68.1"
 
 //     <s.15>Primary DNS Server
 //     <i>IP Address of Primary DNS Server in text representation
@@ -107,7 +107,7 @@
 
 //     <e>IGMP Group Management
 //     <i>Enable or disable Internet Group Management Protocol
-#define ETH0_IGMP_ENABLE        0
+#define ETH0_IGMP_ENABLE        1
 
 //       <o>Membership Table size <2-50>
 //       <i>Number of Groups this host can join
@@ -118,7 +118,7 @@
 //     <q>NetBIOS Name Service
 //     <i>When this option is enabled, the embedded host can be
 //     <i>accessed by its name on local LAN using NBNS protocol.
-#define ETH0_NBNS_ENABLE        1
+#define ETH0_NBNS_ENABLE        0
 
 //     <e>Dynamic Host Configuration
 //     <i>When this option is enabled, local IP address, Net Mask

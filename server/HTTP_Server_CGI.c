@@ -40,7 +40,7 @@ uint8_t hexCharToByte(char c) {
     if ('0' <= c && c <= '9') return c - '0';
     if ('a' <= c && c <= 'f') return c - 'a' + 10;
     if ('A' <= c && c <= 'F') return c - 'A' + 10;
-    return 0; // carácter inválido
+    return 0; // carï¿½cter invï¿½lido
 }
 
 // \brief Process query string received by GET request.
@@ -121,7 +121,7 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 					user_data.id[i] = (hexCharToByte(high) << 4) | hexCharToByte(low);
 				}
 				for (int i = 0; i < 5; i++) {
-					printf("%02X\n ", user_data.id[i]);  // solo imprime los números en hexadecimal
+					printf("%02X\n ", user_data.id[i]);  // solo imprime los nï¿½meros en hexadecimal
 				}
       } else if (strncmp(var, "barrier=", 8) == 0) {
         barrier = atoi(var+8);
