@@ -18,12 +18,12 @@ extern osEventFlagsId_t auth_event_id;
 
 
 void Th_authentication (void *argument) {
- 
+const uint8_t expected[] = {0x01, 0x02, 0x03, 0x04};
   while (1) {
     osMessageQueueGet(auth_Q, &credentials, NULL, osWaitForever);
     // For this test, the credentials are hardcoded
-    if (strncmp(credentials.user, "root@bridge.com", 15) == 0 && 
-        strncmp(credentials.password, "12345", 5) == 0){
+    if (strncmp(credentials.user, "admin", 5) == 0 && 
+        (memcmp(credentials.password, expected, 4) == 0)){
       osEventFlagsSet(auth_event_id, AUTH_SUCCESS);
     } else {
       osEventFlagsSet(auth_event_id, AUTH_FAILURE);

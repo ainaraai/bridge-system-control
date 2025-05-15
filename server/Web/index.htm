@@ -54,11 +54,11 @@
                 <h1 class="h3 mb-3 fw-normal text-white text-center">Autenticación</h1>
 
                 <div class="form-floating">
-                    <input name="user" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input name="user" class="form-control" id="floatingInput" placeholder="User name"  maxlength="19">
                     <label for="floatingInput">Usuario</label>
                 </div>
                 <div class="form-floating">
-                    <input name="passwd" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input name="passwd" type="password" class="form-control" id="floatingPassword" maxlength="4" pattern="\d{4}" inputmode="numeric">
                     <label for="floatingPassword">Contraseña</label>
                 </div>
                 <button class="btn btn-primary w-100 py-2" type="submit">Iniciar sesión</button>

@@ -26,10 +26,13 @@ static uint8_t open_bridge;
 static uint8_t open_bridge_last_status;
 static credentials_t credentials;
 static uint8_t auth_done = 0;
+static uint8_t user_sent = 0;
 static uint8_t auth_success = 0;
 static uint8_t barrier = 0;
 static uint8_t emergency_stop = 0;
 static uint8_t warning_boat = 0;
+uint8_t first_load=1;
+uint8_t bajo_consumo=0;
 
 extern RTC_HandleTypeDef RtcHandle;
 extern RTC_TimeTypeDef stimestructureget;
@@ -84,13 +87,19 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
       // Authentication process.
       // TODO: logout web option and process
       if (strncmp (var, "user=", 5) == 0) {
-        strcpy (credentials.user, var+5);
+        strncpy (credentials.user, var+5,19);
         auth_done = 1;
       } else if (strncmp (var, "passwd=", 7) == 0) {
-        strcpy (credentials.password, var+7);
+				const char *str = var + 7;
+				for (int i = 0; i < 4; i++) {
+					if (str[i] >= '0' && str[i] <= '9') {
+							credentials.password[i] = str[i] - '0'; 
+					}
+				}
         auth_done = 1;
       } else if (strncmp (var, "nombre=", 7) == 0) {
 				strncpy(user_data.hexStringLocal, var + 7, 19);
+				user_sent=0;
         printf("------------------------------\nEl usuario registrado es: %s\n",user_data.hexStringLocal);
       } else if (strncmp (var, "pass=", 5) == 0) {
 				const char *str = var + 5;
@@ -132,10 +141,9 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 	
 	//---------------ENVIO DATOS USUARIO--------------//
 	//osMessageQueuePut("NOMBRE COLA DEL PRINCIPAL_SERVER" , &user_data, 0U, 0U);
-	
+	osMessageQueuePut(auth_Q, &credentials, NULL, 0);
+	auth_error = osEventFlagsWait(auth_event_id, AUTH_SUCCESS|AUTH_FAILURE, osFlagsWaitAny, 5000); // wait 5s max to check the user
   if (auth_done) {
-    osMessageQueuePut(auth_Q, &credentials, NULL, 0);
-    auth_error = osEventFlagsWait(auth_event_id, AUTH_SUCCESS|AUTH_FAILURE, osFlagsWaitAny, 5000); // wait 5s max to check the user
     if (auth_error == AUTH_SUCCESS) {
       auth_success = 1;
       //netCGI_Redirect("estadisticas_generales.html");
@@ -166,7 +174,11 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 //                                          current packet immediately.
 uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *pcgi) {
   uint32_t len = 0;
-
+	User_manag_t user_data;
+	if(first_load==1){
+		//user_satus();
+		//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+	}
   // Analyze a 'c' script line starting position 2
   switch (env[0]) {
     case 'b': // Bridge
@@ -194,6 +206,77 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
       break;
     case 'w': // Warning boat
       len = (uint32_t)sprintf (buf, &env[2], warning_boat);
+      break;
+    case 'a':
+			if(first_load==0){
+				//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+			}
+			if(user_data.estado[0]==1){
+				len = (uint32_t)sprintf (buf, &env[1],"Busy");
+			}else{
+				len = (uint32_t)sprintf (buf, &env[1],"Available");
+			}
+      
+      break;
+    case 'f':
+			if(first_load==0){
+				//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+			}
+      if(user_data.estado[1]==1){
+				len = (uint32_t)sprintf (buf, &env[1],"Busy");
+			}else{
+				len = (uint32_t)sprintf (buf, &env[1],"Available");
+			}
+      break;
+    case 'd':
+			if(first_load==0){
+				//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+			}
+      if(user_data.estado[2]==1){
+				len = (uint32_t)sprintf (buf, &env[1],"Busy");
+			}else{
+				len = (uint32_t)sprintf (buf, &env[1],"Available");
+			}
+      break;
+    case 'e':
+			if(first_load==0){
+				//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+			}
+      if(user_data.estado[3]==1){
+				len = (uint32_t)sprintf (buf, &env[1],"Busy");
+			}else{
+				len = (uint32_t)sprintf (buf, &env[1],"Available");
+			}
+      break;
+    case 'g':
+			if(first_load==0){
+				//osMessageQueueGet(mid_MsgQueue_web, &user_data, NULL, osWaitForever);
+			}
+      if(user_data.estado[4]==1){
+				len = (uint32_t)sprintf (buf, &env[1],"Busy");
+			}else{
+				len = (uint32_t)sprintf (buf, &env[1],"Available");
+			}
+			first_load=0;
+      break;
+		case 'l':
+			HAL_RTC_GetTime(&RtcHandle, &stimestructureget, RTC_FORMAT_BIN);
+			sprintf(time_1, "%02d:%02d:%02d", stimestructureget.Hours, stimestructureget.Minutes, stimestructureget.Seconds);
+			len = (uint32_t)sprintf (buf, &env[1], time_1);
+      break;
+		case 'n':
+			if(bajo_consumo==0){
+				//activar bajo consumo
+				bajo_consumo=1;
+			}
+			len = (uint32_t)sprintf (buf, &env[1], time_1);
+      break;
+		case 'p':
+			if(bajo_consumo==1){
+				//desactivar bajo consumo
+				bajo_consumo=0;
+			}
+			len = (uint32_t)sprintf (buf, &env[1], time_1);
       break;
   }
   return (len);

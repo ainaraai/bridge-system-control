@@ -107,6 +107,7 @@ function updateMultiple(formUpd, callBack, userName, userPassword) {
 
 function processResponse(xmlDoc) {
   data = xmlDoc.getElementsByTagName("control");
+	if (data.length > 0) {
   try {
     bridgeVars.bridgeStatus  = parseInt(data[0].childNodes[0].textContent);
     bridgeVars.barrier       = parseInt(data[0].childNodes[1].textContent);
@@ -121,6 +122,26 @@ function processResponse(xmlDoc) {
         bridgeVars[mesasure] = "";
     }
   }
+}
+		textElementArr = xmlDoc.getElementsByTagName("text");
+	if (textElementArr.length > 0) {
+  for(var i = 0; i < textElementArr.length; i++) {
+   try {
+    elId = textElementArr[i].childNodes[0].childNodes[0].nodeValue;
+    elValue = textElementArr[i].childNodes[1].childNodes[0].nodeValue;
+    document.getElementById(elId).value = elValue;
+   }
+   catch(error) {
+    if(elId == undefined){
+     continue;
+    }
+    else if(elValue == undefined) {
+     elValue = "";
+     document.getElementById(elId).value = elValue;
+    }
+   }
+  }
+}
 }
 
 /* XMLHttpRequest object specific functions */

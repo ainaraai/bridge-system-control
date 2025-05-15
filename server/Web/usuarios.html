@@ -52,12 +52,22 @@
     </style>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="sign-in.css" rel="stylesheet">
+	<script src="xml_http.js"></script>
+	<script>
+		var user_obj= new periodicObj("users_status.cgx");
+		 updateMultiple(user_obj);
+    </script>
+
+
+
 </head>
 
 <!-- This define the modal to show when entering empty values  -->
@@ -65,11 +75,11 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content bg-dark text-white">
       <div class="modal-header">
-        <h5 class="modal-title" id="warningModalLabel">Aviso</h5>
+        <h5 class="fas fa-exclamation-triangle" style="color: orange;" id="warningModalLabel">Warning!</h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        La siguiente acción borrará el usuario de la base de datos 
+        The following action will delete the user from the database
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="confirmEmptySubmit">Aceptar</button>
@@ -78,7 +88,23 @@
     </div>
   </div>
 </div>
-
+<div class="modal fade" id="warningModal_modify" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-white">
+      <div class="modal-header">
+        <h5 class="fas fa-exclamation-triangle" style="color: orange;" id="warningModalLabel">Warning!</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+         The following action will modify the user in the database
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="confirmModifySubmit">Aceptar</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
 <body class="d-flex align-items-center justify-content-center py-4">
   <main class="d-flex translucid align-items-center w-100">
     <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
@@ -87,7 +113,7 @@
       <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
         <thead>
           <tr>
-            <th>ID1</th>
+            <th>IDs</th>
             <th>Status</th>
             <th>Name</th>
             <th>Password</th>
@@ -96,11 +122,11 @@
         </thead>
       </table>
 
-      <form action="usuarios.html" method="POST" class="user-form" target="frame">
+      <form action="usuarios.html" method="POST" class="user-form">
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
           <tr>
             <td>E3B0B7F713</td>
-            <td><input type="text" readonly id="user1_status" value="%s"></td>
+            <td><input type="text" name="ID"  readonly id="user1_status" value=""></td>
             <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
             <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
             <td>
@@ -111,11 +137,11 @@
         </table>
       </form>
 	  
-      <form action="usuarios.html" method="POST" class="user-form" target="frame">
+      <form action="usuarios.html" method="POST" class="user-form">
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
           <tr>
             <td>9319C2F7BF</td>
-            <td><input type="text" readonly id="user2_status" value="%s"></td>
+            <td><input type="text" name="ID"  readonly id="user2_status" value=""></td>
             <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
             <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
             <td>
@@ -126,11 +152,11 @@
         </table>
       </form>
 
-      <form action="usuarios.html" method="POST" class="user-form" target="frame">
+      <form action="usuarios.html" method="POST" class="user-form">
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
           <tr>
             <td>ABD8EF1234</td>
-            <td><input type="text" readonly id="user3_status" value="%s"></td>
+            <td><input type="text" name="ID"  readonly id="user3_status" value=""></td>
             <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
             <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
             <td>
@@ -141,11 +167,11 @@
         </table>
       </form>
 
-      <form action="usuarios.html" method="POST" class="user-form" target="frame">
+      <form action="usuarios.html" method="POST" class="user-form">
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
           <tr>
             <td>56AD3E1923</td>
-            <td><input type="text" readonly id="user4_status" value="%s"></td>
+            <td><input type="text" name="ID"  readonly id="user4_status" value=""></td>
             <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
             <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
             <td>
@@ -156,11 +182,11 @@
         </table>
       </form>
 
-      <form action="usuarios.html" method="POST" class="user-form" target="frame">
+      <form action="usuarios.html" method="POST" class="user-form">
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
           <tr>
             <td>78FE123FAB</td>
-            <td><input type="text" readonly id="user5_status" value="%s"></td>
+            <td><input type="text" name="ID" readonly id="user5_status" value=""></td>
             <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
             <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
             <td>
@@ -173,13 +199,6 @@
 
     </div>
   </main>
-    <script src="xml_http.js"></script>
-		<script>
-		var user_obj= new periodicObj("users_status.cgx", 500);
-        setInterval(function () {
-            updateMultiple(user_obj);
-        }, 500);
-    </script>
     <!-- Bootstrap Modal Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -188,10 +207,11 @@
 
     document.querySelectorAll('.user-form').forEach(form => {
       form.addEventListener('submit', function (e) {
+		  const ID = form.querySelector('input[name="ID"]');
           const nombre = form.querySelector('input[name="nombre"]');
           const pass = form.querySelector('input[name="pass"]');
 
-          if (!nombre.value.trim() || !pass.value.trim()) {
+          if (ID.value.trim()==="Busy" && !nombre.value.trim() && !pass.value.trim()) {
               e.preventDefault();
               pendingForm = form;
 
@@ -210,9 +230,63 @@
 
           pendingForm.submit();
           pendingForm = null;
+		  updateMultiple(user_obj);
       }
     });
     </script>
+    <script>
+    let pendingForm_modify = null;
+
+    document.querySelectorAll('.user-form').forEach(form => {
+      form.addEventListener('submit', function (e) {
+          const ID = form.querySelector('input[name="ID"]');
+		  const nombre = form.querySelector('input[name="nombre"]');
+          const pass = form.querySelector('input[name="pass"]');
+
+          if (ID.value.trim()==="Busy" && nombre.value.trim() && pass.value.trim()) {
+              e.preventDefault();
+              pendingForm_modify = form;
+
+              const modal = new bootstrap.Modal(document.getElementById('warningModal_modify'));
+              modal.show();
+          }
+      });
+    });
+
+    /* Modal accept: sends the pending form*/
+    document.getElementById('confirmModifySubmit').addEventListener('click', function () {
+      if (pendingForm_modify) {
+          const modalElement = document.getElementById('warningModal_modify');
+          const modalInstance = bootstrap.Modal.getInstance(modalElement);
+          modalInstance.hide();
+
+          pendingForm_modify.submit();
+          pendingForm_modify = null;
+      }
+    });
+    </script>
+	
+	<script>
+	document.querySelectorAll('.user-form').forEach(form => {
+	  form.addEventListener('submit', function(event) {
+		const nombre = form.querySelector('input[name="nombre"]').value.trim();
+		const pass = form.querySelector('input[name="pass"]').value.trim();
+		const ID = form.querySelector('input[name="ID"]').value.trim();
+
+		if ((nombre && !pass) || (!nombre && pass)) {
+		  event.preventDefault();
+		  alert("If you fill in either the name or the password, you must fill in both fields");
+		}else if(ID === "Available" && !nombre && !pass){
+			event.preventDefault();
+			alert("To add a new user, both fields must be filled in.");
+		}else if(ID === "Available" && nombre && pass){
+			updateMultiple(user_obj);
+		}
+	  });
+	});
+	</script>
+	
+
 </body>
 <iframe name="frame" hidden></iframe>
 </html>

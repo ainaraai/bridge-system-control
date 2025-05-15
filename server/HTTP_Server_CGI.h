@@ -17,6 +17,7 @@ typedef struct {
 	uint8_t password_user[4];
 	uint8_t id[5];
 	char hexStringLocal[20];
+	uint8_t estado[5];
 } User_manag_t;
 
 
