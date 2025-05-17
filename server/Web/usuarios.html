@@ -105,100 +105,106 @@
     </div>
   </div>
 </div>
-<body class="d-flex align-items-center justify-content-center py-4">
-  <main class="d-flex translucid align-items-center w-100">
-    <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
-      <h1 class="display-5 fw-bold text-center mb-4">User Management</h1>
-
-      <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-        <thead>
-          <tr>
-            <th>IDs</th>
-            <th>Status</th>
-            <th>Name</th>
-            <th>Password</th>
-            <th>Send</th>
-          </tr>
-        </thead>
-      </table>
-
-      <form action="usuarios.html" method="POST" class="user-form">
+<body>
+  <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+      <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="functionalities.html">Menú
+          principal</a>
+  </header>
+  <div class="d-flex align-items-center justify-content-center vh-100 w-100">
+    <main class="d-flex translucid align-items-center w-100">
+      <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
+        <h1 class="display-5 fw-bold text-center mb-4">User Management</h1>
+  
         <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-          <tr>
-            <td>E3B0B7F713</td>
-            <td><input type="text" name="ID"  readonly id="user1_status" value=""></td>
-            <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
-            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
-            <td>
-              <input type="hidden" name="id" value="E3B0B7F713">
-              <button type="submit" class="btn btn-primary">Send</button>
-            </td>
-          </tr>
+          <thead>
+            <tr>
+              <th>IDs</th>
+              <th>Status</th>
+              <th>Name</th>
+              <th>Password</th>
+              <th>Send</th>
+            </tr>
+          </thead>
         </table>
-      </form>
-	  
-      <form action="usuarios.html" method="POST" class="user-form">
-        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-          <tr>
-            <td>9319C2F7BF</td>
-            <td><input type="text" name="ID"  readonly id="user2_status" value=""></td>
-            <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
-            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
-            <td>
-              <input type="hidden" name="id" value="9319C2F7BF">
-              <button type="submit" class="btn btn-primary">Send</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-
-      <form action="usuarios.html" method="POST" class="user-form">
-        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-          <tr>
-            <td>ABD8EF1234</td>
-            <td><input type="text" name="ID"  readonly id="user3_status" value=""></td>
-            <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
-            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
-            <td>
-              <input type="hidden" name="id" value="ABD8EF1234">
-              <button type="submit" class="btn btn-primary">Send</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-
-      <form action="usuarios.html" method="POST" class="user-form">
-        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-          <tr>
-            <td>56AD3E1923</td>
-            <td><input type="text" name="ID"  readonly id="user4_status" value=""></td>
-            <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
-            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
-            <td>
-              <input type="hidden" name="id" value="56AD3E1923">
-              <button type="submit" class="btn btn-primary">Send</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-
-      <form action="usuarios.html" method="POST" class="user-form">
-        <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
-          <tr>
-            <td>78FE123FAB</td>
-            <td><input type="text" name="ID" readonly id="user5_status" value=""></td>
-            <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
-            <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
-            <td>
-              <input type="hidden" name="id" value="78FE123FAB">
-              <button type="submit" class="btn btn-primary">Send</button>
-            </td>
-          </tr>
-        </table>
-      </form>
-
-    </div>
-  </main>
+  
+        <form action="usuarios.html" method="POST" class="user-form">
+          <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+            <tr>
+              <td>E3B0B7F713</td>
+              <td><input type="text" name="ID"  readonly id="user1_status" value=""></td>
+              <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
+              <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
+              <td>
+                <input type="hidden" name="id" value="E3B0B7F713">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+      
+        <form action="usuarios.html" method="POST" class="user-form">
+          <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+            <tr>
+              <td>9319C2F7BF</td>
+              <td><input type="text" name="ID"  readonly id="user2_status" value=""></td>
+              <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
+              <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
+              <td>
+                <input type="hidden" name="id" value="9319C2F7BF">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+  
+        <form action="usuarios.html" method="POST" class="user-form">
+          <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+            <tr>
+              <td>ABD8EF1234</td>
+              <td><input type="text" name="ID"  readonly id="user3_status" value=""></td>
+              <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
+              <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
+              <td>
+                <input type="hidden" name="id" value="ABD8EF1234">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+  
+        <form action="usuarios.html" method="POST" class="user-form">
+          <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+            <tr>
+              <td>56AD3E1923</td>
+              <td><input type="text" name="ID"  readonly id="user4_status" value=""></td>
+              <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
+              <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
+              <td>
+                <input type="hidden" name="id" value="56AD3E1923">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+  
+        <form action="usuarios.html" method="POST" class="user-form">
+          <table class="centered-table table table-dark table-bordered align-middle text-center mb-0">
+            <tr>
+              <td>78FE123FAB</td>
+              <td><input type="text" name="ID" readonly id="user5_status" value=""></td>
+              <td><input type="text" name="nombre" class="form-control" maxlength="19"></td>
+              <td><input type="password" name="pass" class="form-control" maxlength="4" pattern="\d{4}" inputmode="numeric"></td>
+              <td>
+                <input type="hidden" name="id" value="78FE123FAB">
+                <button type="submit" class="btn btn-primary">Send</button>
+              </td>
+            </tr>
+          </table>
+        </form>
+  
+      </div>
+    </main>
+  </div>
     <!-- Bootstrap Modal Script -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 

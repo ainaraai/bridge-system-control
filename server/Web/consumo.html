@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Lorena Burgos Delgado">
-    <title>User Managment</title>
+    <title>Consumption</title>
 	
 
     <style>
@@ -58,27 +58,33 @@
 	}
 	</script>
 </head>
-<body class="d-flex align-items-center justify-content-center py-4">
-    <main class="d-flex translucid align-items-center w-100">
-	  <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
-	  <h1 class="display-5 fw-bold text-center mb-4">System Consumption</h1>
-		<form action="sntp.html" method="POST">
-		<table class="table table-dark table-bordered align-middle text-center">
-		  <thead>
-			<tr>
-			  <th>Consumption(A)</th>
-			  <th>Low Consumption Mode</th>
-			</tr>
-		  </thead>
-		  <tbody>
-			<tr>
-				  <td><input type="text" readonly id="consumption" value=""></td>
-				  <td><input type="checkbox" id="ConsumptionChkBox" onclick="updateConsumo()"></td>
-			</tr>
-		  </tbody>
-		</table>
-	</form>
-	</div>
-	 </main>
+<body>
+    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
+        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="functionalities.html">Menú
+            principal</a>
+    </header>
+    <div class="d-flex align-items-center justify-content-center vh-100 w-100">
+      <main class="d-flex translucid align-items-center w-100">
+      <div class="col-10 px-4 py-5 my-5 text-white mx-auto">
+      <h1 class="display-5 fw-bold text-center mb-4">System Consumption</h1>
+      <form action="sntp.html" method="POST">
+      <table class="table table-dark table-bordered align-middle text-center">
+        <thead>
+        <tr>
+          <th>Consumption(A)</th>
+          <th>Low Consumption Mode</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><input type="text" readonly id="consumption" value=""></td>
+            <td><input type="checkbox" id="ConsumptionChkBox" onclick="updateConsumo()"></td>
+        </tr>
+        </tbody>
+      </table>
+    </form>
+    </div>
+     </main>
+    </div>
 </body>
 </html>
