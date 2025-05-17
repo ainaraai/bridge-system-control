@@ -1,0 +1,247 @@
+/**
+  ******************************************************************************
+  * @file    Templates/Src/stm32f4xx_it.c 
+  * @author  MCD Application Team
+  * @brief   Main Interrupt Service Routines.
+  *          This file provides template for all exceptions handler and 
+  *          peripherals interrupt service routine.
+  *
+  * @note    modified by ARM
+  *          The modifications allow to use this file as User Code Template
+  *          within the Device Family Pack.
+  ******************************************************************************
+  * @attention
+  *
+  * Copyright (c) 2017 STMicroelectronics.
+  * All rights reserved.
+  *
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  ******************************************************************************
+  */
+
+/* Includes ------------------------------------------------------------------*/
+#include "main.h"
+#include "stm32f4xx_it.h"
+#include "cmsis_os2.h"
+//#include "Teclado.h"
+
+#ifdef _RTE_
+#include "RTE_Components.h"             /* Component selection */
+#endif
+
+/** @addtogroup STM32F4xx_HAL_Examples
+  * @{
+  */
+
+/** @addtogroup Templates
+  * @{
+  */
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
+
+/******************************************************************************/
+/*            Cortex-M4 Processor Exceptions Handlers                         */
+/******************************************************************************/
+#define FREQ_APB1 84000000
+
+static int first_captured = 0;
+static unsigned int value1, value2, diff;
+float freq; // must be global to check its value on realtime in Th_IR
+static int psc = 0;
+extern TIM_HandleTypeDef tim4;
+
+extern osEventFlagsId_t IR_event_id;
+
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
+
+void TIM4_IRQHandler(void)
+{
+  HAL_TIM_IRQHandler(&tim4);
+}
+
+void HAL_TIM_IC_CaptureCallback (TIM_HandleTypeDef * htim)
+{
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4)
+	{
+		if (!first_captured)
+		{
+			value1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4);
+			first_captured = 1;
+		}
+		else
+		{
+			value2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4);
+			if (value2 >= value1)
+			{
+				diff = value2 - value1;
+			}
+			else
+			{
+				diff = (htim->Instance->ARR - value1) + value2;
+			}
+			first_captured = 0;
+			psc = (htim->Instance->PSC + 1);
+			freq = (FREQ_APB1 / psc) / diff;
+		}
+	}
+}
+
+/**
+  * @brief  This function handles NMI exception.
+  * @param  None
+  * @retval None
+  */
+void NMI_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles Hard Fault exception.
+  * @param  None
+  * @retval None
+  */
+void HardFault_Handler(void)
+{
+  /* Go to infinite loop when Hard Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Memory Manage exception.
+  * @param  None
+  * @retval None
+  */
+void MemManage_Handler(void)
+{
+  /* Go to infinite loop when Memory Manage exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Bus Fault exception.
+  * @param  None
+  * @retval None
+  */
+void BusFault_Handler(void)
+{
+  /* Go to infinite loop when Bus Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles Usage Fault exception.
+  * @param  None
+  * @retval None
+  */
+void UsageFault_Handler(void)
+{
+  /* Go to infinite loop when Usage Fault exception occurs */
+  while (1)
+  {
+  }
+}
+
+/**
+  * @brief  This function handles SVCall exception.
+  * @param  None
+  * @retval None
+  */
+#ifndef RTE_CMSIS_RTOS2_RTX5
+void SVC_Handler(void)
+{
+}
+#endif
+
+/**
+  * @brief  This function handles Debug Monitor exception.
+  * @param  None
+  * @retval None
+  */
+void DebugMon_Handler(void)
+{
+}
+
+/**
+  * @brief  This function handles PendSVC exception.
+  * @param  None
+  * @retval None
+  */
+#ifndef RTE_CMSIS_RTOS2_RTX5
+void PendSV_Handler(void)
+{
+}
+#endif
+
+/**
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
+#ifndef RTE_CMSIS_RTOS2_RTX5
+void SysTick_Handler(void)
+{
+  HAL_IncTick();
+}
+#endif
+
+/******************************************************************************/
+/*                 STM32F4xx Peripherals Interrupt Handlers                   */
+/*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
+/*  available peripheral interrupt handler's name please refer to the startup */
+/*  file (startup_stm32f4xx.s).                                               */
+/******************************************************************************/
+
+
+void EXTI15_10_IRQHandler(void)
+{
+    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13); // PC10
+    
+}
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{	
+    // Debounce delay (esperar a que el rebote termine)
+    //osDelay(50);  // 50ms suele ser seguro. Puedes ajustar a 20-100ms
+
+    // Comprobar que el pin sigue en estado bajo después del rebote
+//    GPIO_TypeDef *port = NULL;
+// 
+
+//    if (HAL_GPIO_ReadPin(port, GPIO_Pin) == GPIO_PIN_RESET) {
+//        columna_activa = GPIO_Pin;
+//        osThreadFlagsSet(tid_ThreadTeclado, 0x01); // Despierta el thread
+//    }
+}
+
+/**
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
+/*void PPP_IRQHandler(void)
+{
+}*/
+
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+  */
