@@ -83,13 +83,13 @@ uint32_t HAL_GetTick (void) {
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 
-static GPIO_InitTypeDef GPIO_InitStruct = {0};
-
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void Error_Handler(void);
 
-void StandbyMode(void);
+uint8_t sleep_mode_status = 0;
+void sleep_mode(void);
+void init_usr_button(void);
 
 /* Private functions ---------------------------------------------------------*/
 
@@ -102,46 +102,123 @@ void 	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 {
 	if (GPIO_Pin == GPIO_PIN_13)
 	{
-    StandbyMode();
+    if (sleep_mode_status == 1) {
+      sleep_mode_status = 0;
+    } else {
+      sleep_mode_status = 1;
+      sleep_mode(); 
+    }
 	}
 }
 
-
 /**
-  * @brief  This function configures the system to enter Standby mode for
+  * @brief  This function configures the system to enter Sleep mode for
   *         current consumption measurement purpose.
-  *         STANDBY Mode
-  *         ============
-  *           - Backup SRAM and RTC OFF
-  *           - IWDG and LSI OFF
-  *           - Wakeup using WakeUp Pin (PA.00)
+  *         Sleep Mode
+  *         ==========  
+  *            - System Running at PLL (100MHz)
+  *            - Flash 3 wait state
+  *            - Instruction and Data caches ON
+  *            - Prefetch ON   
+  *            - Code running from Internal FLASH
+  *            - All peripherals disabled.
+  *            - Wakeup using EXTI Line (user Button)
   * @param  None
   * @retval None
   */
-void StandbyMode(void)
+void sleep_mode(void)
 {
-  /* Enable Power Clock */
-  __HAL_RCC_PWR_CLK_ENABLE();
-  
-  /* Allow access to Backup */
-  HAL_PWR_EnableBkUpAccess();
+  GPIO_InitTypeDef GPIO_InitStruct;
+  sleep_mode_status = 1;
+  init_usr_button();
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET); // Turn on red led
 
-  /* Reset RTC Domain */
-  __HAL_RCC_BACKUPRESET_FORCE();
-  __HAL_RCC_BACKUPRESET_RELEASE();
-  
-  /* Disable all used wakeup sources: Pin1(PA.0) */
-  HAL_PWR_DisableWakeUpPin(PWR_WAKEUP_PIN1);
-  
-  /* Clear all related wakeup flags */
-  __HAL_PWR_CLEAR_FLAG(PWR_FLAG_WU);
-  
-  /* Re-enable all used wakeup sources: Pin1(PA.0) */
-  HAL_PWR_EnableWakeUpPin(PWR_WAKEUP_PIN1);
+  /* Configure all GPIO as analog to reduce current consumption on non used IOs */
+  /* Enable GPIOs clock */
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+//  __HAL_RCC_GPIOB_CLK_ENABLE();
+//  __HAL_RCC_GPIOC_CLK_ENABLE();
+//  __HAL_RCC_GPIOD_CLK_ENABLE();
+  __HAL_RCC_GPIOE_CLK_ENABLE();
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOG_CLK_ENABLE();
+  __HAL_RCC_GPIOH_CLK_ENABLE();
+  __HAL_RCC_GPIOI_CLK_ENABLE();
+  __HAL_RCC_GPIOJ_CLK_ENABLE();
+  __HAL_RCC_GPIOK_CLK_ENABLE();
 
-  /*## Enter Standby Mode ####################################################*/
-  /* Request to enter STANDBY mode  */
-  HAL_PWR_EnterSTANDBYMode();  
+  GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
+  GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Pin = GPIO_PIN_All;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct); 
+//  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+//  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+//  HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOH, &GPIO_InitStruct); 
+  HAL_GPIO_Init(GPIOI, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOJ, &GPIO_InitStruct); 
+  HAL_GPIO_Init(GPIOK, &GPIO_InitStruct);
+
+  /* Disable GPIOs clock */
+  __HAL_RCC_GPIOA_CLK_DISABLE();
+//  __HAL_RCC_GPIOB_CLK_DISABLE();
+//  __HAL_RCC_GPIOC_CLK_DISABLE();
+//  __HAL_RCC_GPIOD_CLK_DISABLE();
+  __HAL_RCC_GPIOE_CLK_DISABLE();
+  __HAL_RCC_GPIOF_CLK_DISABLE();
+  __HAL_RCC_GPIOG_CLK_DISABLE();
+  __HAL_RCC_GPIOH_CLK_DISABLE();
+  __HAL_RCC_GPIOI_CLK_DISABLE();
+  __HAL_RCC_GPIOJ_CLK_DISABLE();
+  __HAL_RCC_GPIOK_CLK_DISABLE();
+  
+
+  /* Suspend Tick increment to prevent wakeup by Systick interrupt. 
+     Otherwise the Systick interrupt will wake up the device within 1ms (HAL time base) */
+  HAL_SuspendTick();
+
+  /* Request to enter SLEEP mode */
+  HAL_PWR_EnterSLEEPMode(PWR_MAINREGULATOR_ON, PWR_SLEEPENTRY_WFI);
+  
+  /*interrupt causes to WAKE UP*/
+  
+
+  /* Resume Tick interrupt if disabled prior to sleep mode entry */
+  HAL_ResumeTick();
+
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET);
+}
+
+void init_leds(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct;
+	__HAL_RCC_GPIOB_CLK_ENABLE();
+  
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+
+  GPIO_InitStruct.Pin = GPIO_PIN_0 | GPIO_PIN_7 | GPIO_PIN_14;
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+}
+
+void init_usr_button(void)
+{
+  
+  GPIO_InitTypeDef GPIO_InitStruct;
+	__HAL_RCC_GPIOC_CLK_ENABLE();
+  
+	GPIO_InitStruct.Pin = GPIO_PIN_13;
+	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+//	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	
+	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 }
 
 
@@ -161,24 +238,10 @@ int main(void)
   
     /* Before we can access to every register of the PWR peripheral we must enable it */
   __HAL_RCC_PWR_CLK_ENABLE();
-
-  /* Check and handle if the system was resumed from Standby mode */ 
-  if(__HAL_PWR_GET_FLAG(PWR_FLAG_SB) != RESET)
-  {
-    __HAL_PWR_CLEAR_FLAG(PWR_FLAG_SB);
-    
-  }
-
-	__HAL_RCC_GPIOC_CLK_ENABLE();
   
-  	// USER BUTTON
-	GPIO_InitStruct.Pin = GPIO_PIN_13;
-	GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
-	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-	
-	HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+  
+  init_leds();
+
 
 #ifdef RTE_CMSIS_RTOS2
   /* Initialize CMSIS-RTOS2 */

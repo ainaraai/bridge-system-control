@@ -9,6 +9,8 @@ osThreadId_t tid_Thread;                        // thread id
  
 void Thread (void *argument);                   // thread function
 static GPIO_InitTypeDef GPIO_InitStruct = {0};
+extern void sleep_mode(void);
+
 
 int Init_Thread (void) {
  
@@ -21,7 +23,9 @@ int Init_Thread (void) {
 }
  
 void Thread (void *argument) {
+    int i;
 	__HAL_RCC_GPIOB_CLK_ENABLE();
+
   // USER LEDS
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
@@ -30,7 +34,10 @@ void Thread (void *argument) {
   GPIO_InitStruct.Pin = GPIO_PIN_0;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
   while (1) {
-    HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
-    osDelay(500);
+    for (i=0; i<14; i++) {
+      HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_0);
+      osDelay(500);
+    }
+    sleep_mode();
   }
 }
