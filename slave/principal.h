@@ -2,7 +2,7 @@
 #define __THPRIN_H
 
 #include "Driver_SPI.h"
-
+#include "Board_LED.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os2.h"                          // CMSIS RTOS header file
 
@@ -21,6 +21,7 @@
 #include "temp.h"
 #include "servomotor.h"
 #include "sleep_mode.h"
+#include "LEDs.h"
 //#include "Teclado.h"
 //#include "lcd.h"
 
