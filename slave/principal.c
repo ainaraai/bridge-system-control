@@ -106,6 +106,15 @@ void SPI_Slave_Thread(void *arg) {
 	static SPI_Message msg_tx = {0};
   static SPI_Message msg_rx = {0};
 	
+//---------------------TEST_LEDS---------------------------------
+//	osDelay(1000);
+//	LED_Off(0);
+//	osDelay(1000);
+//	LED_Off(1);
+//	osDelay(1000);
+//	LED_Off(2);
+//---------------------------------------------------------------	
+	
 	while(1){
 //		osThreadFlagsSet(getModServoThreadID(),START_FLAG);
 //		osDelay(6000);
@@ -132,16 +141,20 @@ void SPI_Slave_Thread(void *arg) {
 					osThreadFlagsWait(TRANSFER_COMPLETE, osFlagsWaitAny, osWaitForever);
 
 					if (msg_rx.type == CMD_ACTIVATE_SERVO) {
+						LED_On(2); //RED
            	osThreadFlagsSet(getModServoThreadID(),OPEN_FLAG);
 		        osDelay(10000);
 //            set_led_red();
 					} else if (msg_rx.type == CMD_CLOSE_SERVO) {
+						
 							osThreadFlagsSet(getModServoThreadID(),CLOSE_FLAG);
 	          	osDelay(10000);
+							LED_On(0); //GREEN
 //							set_led_green();
 					} else if (msg_rx.type == CMD_STOP_ALL) {
 							osThreadFlagsSet(getModServoSTOPThreadID(),STOP_FLAG);
 		          osDelay(5000);
+							LED_On(1); //BLUE
 //							emergency_led();
 					}else if (msg_rx.type == CMD_RESUME_ALL) {
 					   osThreadFlagsSet(getModServoSTOPThreadID(),START_FLAG);
@@ -158,14 +171,15 @@ void SPI_Slave_Thread(void *arg) {
 
 
 void Init_Thread_principal(void){
-
+	Init_LED1();
+	Init_LED2();
+	Init_LED3();
   SPI_Slave_Init();
 	//initModTemp();
 	InitModServo();
 	tid_Thread_slave=osThreadNew (SPI_Slave_Thread, NULL, NULL);
 	osThreadFlagsSet(getModServoThreadID(),START_FLAG);
 	osDelay(3000);
-
 }
 
  
