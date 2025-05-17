@@ -26,7 +26,7 @@
 #include "main.h"
 #include "stm32f4xx_it.h"
 #include "cmsis_os2.h"
-//#include "Teclado.h"
+#include "sleep_mode.h"
 
 #ifdef _RTE_
 #include "RTE_Components.h"             /* Component selection */
@@ -93,6 +93,19 @@ void HAL_TIM_IC_CaptureCallback (TIM_HandleTypeDef * htim)
 			psc = (htim->Instance->PSC + 1);
 			freq = (FREQ_APB1 / psc) / diff;
 		}
+	}
+}
+
+void	EXTI15_10_IRQHandler(void)
+{
+	HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13);
+}
+
+void 	HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if (GPIO_Pin == GPIO_PIN_13)
+	{
+    osThreadFlagsSet(getSleepModeThreadID(), EXIT_SLEEP_MODE_FLAG);
 	}
 }
 
@@ -208,26 +221,26 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 
-void EXTI15_10_IRQHandler(void)
-{
-    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13); // PC10
-    
-}
+//void EXTI15_10_IRQHandler(void)
+//{
+//    HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_13); // PC10
+//    
+//}
 
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{	
-    // Debounce delay (esperar a que el rebote termine)
-    //osDelay(50);  // 50ms suele ser seguro. Puedes ajustar a 20-100ms
+//void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+//{	
+//    // Debounce delay (esperar a que el rebote termine)
+//    //osDelay(50);  // 50ms suele ser seguro. Puedes ajustar a 20-100ms
 
-    // Comprobar que el pin sigue en estado bajo después del rebote
-//    GPIO_TypeDef *port = NULL;
-// 
+//    // Comprobar que el pin sigue en estado bajo después del rebote
+////    GPIO_TypeDef *port = NULL;
+//// 
 
-//    if (HAL_GPIO_ReadPin(port, GPIO_Pin) == GPIO_PIN_RESET) {
-//        columna_activa = GPIO_Pin;
-//        osThreadFlagsSet(tid_ThreadTeclado, 0x01); // Despierta el thread
-//    }
-}
+////    if (HAL_GPIO_ReadPin(port, GPIO_Pin) == GPIO_PIN_RESET) {
+////        columna_activa = GPIO_Pin;
+////        osThreadFlagsSet(tid_ThreadTeclado, 0x01); // Despierta el thread
+////    }
+//}
 
 /**
   * @brief  This function handles PPP interrupt request.

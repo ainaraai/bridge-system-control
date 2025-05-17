@@ -20,6 +20,7 @@
 //MODULES
 #include "temp.h"
 #include "servomotor.h"
+#include "sleep_mode.h"
 //#include "Teclado.h"
 //#include "lcd.h"
 
@@ -45,6 +46,8 @@ typedef enum {
     CMD_RESUME_ALL       = 0x11,
     CMD_CLOSE_SERVO      = 0x12,
     CMD_STOP_ALL         = 0x13,
+    CMD_ENTER_SLEEP_MODE = 0x20,
+    CMD_EXIT_SLEEP_MODE  = 0x21
 	  
 } SPI_MessageType;
 
@@ -55,5 +58,6 @@ void Init_Thread_principal(void);
 osThreadId_t getThIDPrinAccesoManual(void);
 osThreadId_t getThIDSlave(void);
 void High_temp(void);
+void sleep_mode_wakeUp(void);
 
 #endif

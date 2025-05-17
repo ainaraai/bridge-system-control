@@ -16,10 +16,10 @@ GPIO_InitTypeDef GPIO_InitStruct = {0};
 
 extern float freq;
 
-static void init_timer3();
-static void init_timer4();
-static void config_pin_tim3();
-static void config_pin_tim4();
+static void init_timer3(void);
+static void init_timer4(void);
+static void config_pin_tim3(void);
+static void config_pin_tim4(void);
 
 #define DETECTION 0x00000001U
 #define NO_DETECTION 0x00000010U

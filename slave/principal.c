@@ -102,6 +102,12 @@ void High_temp(void) {
     msg.type = EVENT_TEMP_HIGH;
     notify_master_event();   // lower IRQ pin to notify master
 }
+
+void sleep_mode_wakeUp(void) {
+    SPI_Message msg;
+    msg.type = CMD_EXIT_SLEEP_MODE;
+    notify_master_event();   // lower IRQ pin to notify master
+}
 void SPI_Slave_Thread(void *arg) {
 	static SPI_Message msg_tx = {0};
   static SPI_Message msg_rx = {0};
@@ -146,7 +152,8 @@ void SPI_Slave_Thread(void *arg) {
 					}else if (msg_rx.type == CMD_RESUME_ALL) {
 					   osThreadFlagsSet(getModServoSTOPThreadID(),START_FLAG);
 		         osDelay(5000);
-					
+					}else if (msg_rx.type == CMD_ENTER_SLEEP_MODE) {
+            sleep_mode();
 					}
 
 					release_irq_pin();
@@ -161,7 +168,9 @@ void Init_Thread_principal(void){
 
   SPI_Slave_Init();
 	//initModTemp();
+  init_usr_button();
 	InitModServo();
+  Init_Th_sleep_mode();
 	tid_Thread_slave=osThreadNew (SPI_Slave_Thread, NULL, NULL);
 	osThreadFlagsSet(getModServoThreadID(),START_FLAG);
 	osDelay(3000);
