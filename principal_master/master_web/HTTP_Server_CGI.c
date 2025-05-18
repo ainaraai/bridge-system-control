@@ -15,21 +15,9 @@ char time_1[24];
 char date[24];
 float system_consumption;
 
-//extern osEventFlagsId_t auth_event_id;
-
-//extern osMessageQueueId_t bridge_Q;
-//extern osMessageQueueId_t auth_Q;
-
-
-static uint8_t open_bridge;
-static uint8_t open_bridge_last_status;
-//static credentials_t credentials;
-static uint8_t auth_done = 0;
 static uint8_t user_sent = 0;
 static uint8_t auth_success = 0;
 static uint8_t barrier = 0;
-static uint8_t emergency_stop = 0;
-//static uint8_t warning_boat = 0;
 uint8_t first_load=1;
 uint8_t bajo_consumo=0;
 
@@ -74,7 +62,6 @@ void netCGI_ProcessQuery (const char *qstr) {
 void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
   char var[40];
 	User_manag_t user_data;
-  uint32_t auth_error;
  
   if (code != 0) {
     // Ignore all other codes
@@ -132,11 +119,10 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 					barrier=0;
 				  osThreadFlagsSet(getThIDPrinc1(),SUBIR);
 				
-				} else if (strncmp(var, "emergencyStop=", 14) == 0) {
-           emergency_stop = 1;
+				}
+      } else if (strncmp(var, "emergencyStop=", 14) == 0) {
 					 osThreadFlagsSet(getThIDPrinc1(),EMERGENCY);
         }
-      }
     }
   } while (data);
 	
@@ -183,14 +169,6 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
       sprintf(date, "%.2d-%.2d-%.2d", sdatestructureget.Month, sdatestructureget.Date, 2000 + sdatestructureget.Year);
 			len = (uint32_t)sprintf (buf, &env[1], date);
 			break;
-    case 's': // Emergency stop
-      len = (uint32_t)sprintf (buf, &env[2], emergency_stop);
-//		  if(emergency_stop==1){
-//				emergency_stop=0;
-//				
-//			}
-				
-      break;
     case 'w': // Warning boat
       len = (uint32_t)sprintf (buf, &env[2], Boat());
 		  

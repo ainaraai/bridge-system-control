@@ -86,11 +86,8 @@
                     </form>
                     <script>
                         function updateEmergencyStop(status) {
-                            if (window.bridgeVars.emergencyStop == 0) {
-                                document.getElementById('stopImg').style.filter = "grayscale(100%)";
-                                document.getElementById('stopInput').value = status;
-                                document.getElementById('toggle_emergency_stop').submit();
-                            }
+                            document.getElementById('stopInput').value = status;
+                            document.getElementById('toggle_emergency_stop').submit();
                         }
                     </script>
                 </div>
@@ -102,12 +99,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
     <script>
         window.bridgeVars = {
-            bridgeStatus: 0, /* Closed = 0, Mid = 1, Opened = 2*/
-            barrier: 0, /* Closed = 0, Opened = 1*/
             emergencyStop: 0,
-            boatWarn: 0,
-            time: "Not a time",
-            date: "Not a date"
+            boatWarn: 0
         };
         function updateBridgeStatus() {
             /* Warning */
@@ -117,13 +110,15 @@
             } else {
                 img.style.filter = "none";
             }
-            /* Stop */
+            /*
+            Stop
             const imgStop = document.getElementById("stopImg");
             if (window.bridgeVars.emergencyStop == 0) {
                 imgStop.style.filter = "none";
             } else {
                 imgStop.style.filter = "grayscale(100%)";
             }
+            */
         }
     </script>
     <script src="xml_http.js"></script>

@@ -109,10 +109,7 @@ function processResponse(xmlDoc) {
   data = xmlDoc.getElementsByTagName("control");
 	if (data.length > 0) {
   try {
-    bridgeVars.bridgeStatus  = parseInt(data[0].childNodes[0].textContent);
-    bridgeVars.barrier       = parseInt(data[0].childNodes[1].textContent);
-    bridgeVars.emergencyStop = parseInt(data[0].childNodes[2].textContent);
-    bridgeVars.boatWarn      = parseInt(data[0].childNodes[3].textContent);
+    bridgeVars.boatWarn      = parseInt(data[0].childNodes[1].textContent);
     
   } catch (error) {
     for (var mesasure in bridgeVars) {
