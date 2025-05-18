@@ -135,6 +135,8 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 				}
       } else if (strncmp(var, "barrier=", 8) == 0) {
         barrier = atoi(var+8);
+      } else if (strncmp(var, "emergencyStop=", 14) == 0) {
+        emergency_stop = 1;
       }
     }
   } while (data);

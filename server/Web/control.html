@@ -68,17 +68,8 @@
                 </form>
                 <script>
                     function updateBarrierStatus(status) {
-                        if (window.bridgeVars.barrier != status) {
-                            window.bridgeVars.barrier = status;
                             document.getElementById('barrierInput').value = status;
-                            let barrierOpenedButton = document.getElementById("barrierOpenedButton");
-                            if (status === 1) {
-                                barrierOpenedButton.classList.add("active");
-                            } else {
-                                barrierOpenedButton.classList.remove("active");
-                            }
                             document.getElementById("barrierForm").submit();
-                        }
                     }
                 </script>
             </div>
@@ -88,17 +79,18 @@
                 <h2 id="EmergencyStop" class="text-center">Emergencia</h2>
                 <div class="mt-4">
                     <form id="toggle_emergency_stop" action="control.html" method="post" target="frame">
-                        <button id="emergencyButton" style="border: none; background: none;" onclick="toggleEmergencyState(event)">
+                        <button id="emergencyButton" style="border: none; background: none;" onclick="updateEmergencyStop(1)">
                             <img id="stopImg" src="stop.png" alt="stop" style="width: 100px; height: 100px;">
                         </button>
-                        <input type="hidden" name="emergencyStop" value="toggle">
+                        <input id="stopInput" type="hidden" name="emergencyStop" value="toggle">
                     </form>
                     <script>
-                        let emergencyActive = false;
-                        function toggleEmergencyState(event) {
-                            emergencyActive = !emergencyActive;
-                            const img = document.getElementById("stopImg");
-                            img.style.filter = emergencyActive ? "grayscale(100%)" : "none";
+                        function updateEmergencyStop(status) {
+                            if (window.bridgeVars.emergencyStop == 0) {
+                                document.getElementById('stopImg').style.filter = "grayscale(100%)";
+                                document.getElementById('stopInput').value = status;
+                                document.getElementById('toggle_emergency_stop').submit();
+                            }
                         }
                     </script>
                 </div>
@@ -112,31 +104,25 @@
         window.bridgeVars = {
             bridgeStatus: 0, /* Closed = 0, Mid = 1, Opened = 2*/
             barrier: 0, /* Closed = 0, Opened = 1*/
+            emergencyStop: 0,
             boatWarn: 0,
             time: "Not a time",
             date: "Not a date"
         };
         function updateBridgeStatus() {
+            /* Warning */
             const img = document.getElementById("warningImg");
             if (window.bridgeVars.boatWarn == 0) {
                 img.style.filter = "grayscale(100%)";
             } else {
                 img.style.filter = "none";
             }
-
-            switch (window.bridgeVars.bridgeStatus) {
-                case 0:
-                    document.getElementById("backgroud").className = "row justify-content-between p-4 gap-3 bgimg-closed";
-                    break;
-                case 1:
-                    document.getElementById("backgroud").className = "row justify-content-between p-4 gap-3 bgimg-mid";
-                    break;
-                case 2:
-                    document.getElementById("backgroud").className = "row justify-content-between p-4 gap-3 bgimg-opened";
-                    break;
-            
-                default:
-                    break;
+            /* Stop */
+            const imgStop = document.getElementById("stopImg");
+            if (window.bridgeVars.emergencyStop == 0) {
+                imgStop.style.filter = "none";
+            } else {
+                imgStop.style.filter = "grayscale(100%)";
             }
         }
     </script>
