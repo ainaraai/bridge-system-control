@@ -1,0 +1,6 @@
+t <control>
+c r <barrier>%d</barrier>
+c s <stop>%d</stop>
+c w <boat>%d</boat>
+t </control>
+.

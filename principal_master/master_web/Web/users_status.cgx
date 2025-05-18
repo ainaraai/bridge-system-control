@@ -1,0 +1,23 @@
+t <form>
+t <text>
+t <id>user1_status</id>
+c a<value>%s</value>
+t </text>
+t <text>
+t <id>user2_status</id>
+c f<value>%s</value>
+t </text>
+t <text>
+t <id>user3_status</id>
+c d<value>%s</value>
+t </text>
+t <text>
+t <id>user4_status</id>
+c e<value>%s</value>
+t </text>
+t <text>
+t <id>user5_status</id>
+c g<value>%s</value>
+t </text>
+t </form>
+.

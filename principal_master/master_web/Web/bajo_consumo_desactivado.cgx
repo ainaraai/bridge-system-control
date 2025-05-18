@@ -1,0 +1,7 @@
+t <form>
+t <text>
+t <id>ConsumptionChkBox</id>
+c p<value>%s</value>
+t </text>
+t </form>
+.

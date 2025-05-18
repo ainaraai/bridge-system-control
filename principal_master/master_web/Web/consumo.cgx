@@ -1,0 +1,7 @@
+t <form>
+t <text>
+t <id>consumption</id>
+c l<value>%.4f</value>
+t </text>
+t </form>
+.
