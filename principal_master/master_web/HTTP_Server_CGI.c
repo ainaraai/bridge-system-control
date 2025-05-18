@@ -17,7 +17,6 @@ float system_consumption;
 
 static uint8_t user_sent = 0;
 static uint8_t auth_success = 0;
-static uint8_t barrier = 0;
 uint8_t first_load=1;
 uint8_t bajo_consumo=0;
 
@@ -114,15 +113,12 @@ void netCGI_ProcessData (uint8_t code, const char *data, uint32_t len) {
 				}
 			
       } else if (strncmp(var, "barrier=", 8) == 0) {
-        barrier = atoi(var+8);
-				if(barrier==1 && Boat()){
-					barrier=0;
+				if(Boat()){
 				  osThreadFlagsSet(getThIDPrinc1(),SUBIR);
-				
 				}
       } else if (strncmp(var, "emergencyStop=", 14) == 0) {
-					 osThreadFlagsSet(getThIDPrinc1(),EMERGENCY);
-        }
+        osThreadFlagsSet(getThIDPrinc1(),EMERGENCY);
+      }
     }
   } while (data);
 	
@@ -156,9 +152,6 @@ uint32_t netCGI_Script (const char *env, char *buf, uint32_t buf_len, uint32_t *
 
   // Analyze a 'c' script line starting position 2
   switch (env[0]) {
-    case 'r': // Barrier
-      len = (uint32_t)sprintf (buf, &env[2], barrier);
-      break;
 		case 'i': // Time
 			HAL_RTC_GetTime(&RtcHandle, &stimestructureget, RTC_FORMAT_BIN);
 			sprintf(time_1, "%02d:%02d:%02d", stimestructureget.Hours+1, stimestructureget.Minutes, stimestructureget.Seconds);
