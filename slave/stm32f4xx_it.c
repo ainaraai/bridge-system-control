@@ -71,16 +71,16 @@ void TIM4_IRQHandler(void)
 
 void HAL_TIM_IC_CaptureCallback (TIM_HandleTypeDef * htim)
 {
-	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_4)
+	if (htim->Channel == HAL_TIM_ACTIVE_CHANNEL_2)
 	{
 		if (!first_captured)
 		{
-			value1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4);
+			value1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
 			first_captured = 1;
 		}
 		else
 		{
-			value2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_4);
+			value2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_2);
 			if (value2 >= value1)
 			{
 				diff = value2 - value1;
@@ -232,7 +232,7 @@ void SysTick_Handler(void)
 //    // Debounce delay (esperar a que el rebote termine)
 //    //osDelay(50);  // 50ms suele ser seguro. Puedes ajustar a 20-100ms
 
-//    // Comprobar que el pin sigue en estado bajo después del rebote
+//    // Comprobar que el pin sigue en estado bajo despuï¿½s del rebote
 ////    GPIO_TypeDef *port = NULL;
 //// 
 

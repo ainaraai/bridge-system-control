@@ -113,8 +113,8 @@ static void init_timer4()
 	TIM_Channel_InitStruct.ICPrescaler = TIM_ICPSC_DIV1;
 	TIM_Channel_InitStruct.ICSelection = TIM_ICSELECTION_DIRECTTI; // canal TI1 conectado a IC1, TI2-CI2, etc.
 	
-	HAL_TIM_IC_ConfigChannel(&tim4, &TIM_Channel_InitStruct, TIM_CHANNEL_4);
-	HAL_TIM_IC_Start_IT(&tim4, TIM_CHANNEL_4);
+	HAL_TIM_IC_ConfigChannel(&tim4, &TIM_Channel_InitStruct, TIM_CHANNEL_2);
+	HAL_TIM_IC_Start_IT(&tim4, TIM_CHANNEL_2);
 	HAL_NVIC_EnableIRQ(TIM4_IRQn);
 }
 
@@ -135,7 +135,7 @@ static void config_pin_tim4()
 {
 	__HAL_RCC_GPIOB_CLK_ENABLE();
 	
-	GPIO_InitStruct.Pin = GPIO_PIN_9;
+	GPIO_InitStruct.Pin = GPIO_PIN_7;
 	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
 	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
